@@ -1,0 +1,19 @@
+
+
+Endereços de acesso
+
+Tela de Setup Inicial (Primeiro Acesso / Cadastro do Master):
+http://localhost:3000/setup.html
+
+Tela de Login:
+http://localhost:3000/login.html
+
+Solicitar Recuperação (Esqueci a Senha):
+http://localhost:3000/esqueci-senha.html
+
+Redefinir Senha (Tela onde o usuário cadastra a nova senha após clicar no link do e-mail):
+http://localhost:3000/redefinir-senha.html
+
+Painel Administrativo (Área restrita após o login):
+http://localhost:3000/admin.html
+
