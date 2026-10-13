@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilê Egbé Óiyá e Ólúáíwè</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .box-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .badge-date {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ilê Egbé Óiyá e Ólúáíwè</h1>
+        <nav>
+            <a href="/">Início</a>
+            <a href="login.html">Painel Administrativo</a>
+        </nav>
+    </header>
+
+    <div class="container" style="max-width: 1200px;">
+        <div class="hero">
+            <img src="/logo.png" alt="Logo Ilê Egbé Óiyá e Ólúáíwè" class="logo-principal">
+            <div>
+                <span style="color: var(--accent-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Bem-vindo ao</span>
+                <h2 style="border: none; margin: 0.5rem 0 1rem 0;">Ilê Egbé Óiyá e Ólúáíwè</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">por intermédio do Babalorixá Arnaldo Ty Oyá</p>
+                <p>Casa de axé, amor e tradição. Honramos nossos ancestrais com fé, respeito e dedicação, mantendo viva a cultura e os ensinamentos do Candomblé.</p>
+            </div>
+        </div>
+
+        <div class="grid-3">
+            <!-- Próximas Giras -->
+            <div class="box-card">
+                <h3>Próximas Giras e Eventos</h3>
+                <div id="lista-giras" style="margin-top: 1rem;">
+                    <p style="color: var(--text-muted);">Carregando eventos...</p>
+                </div>
+            </div>
+
+            <!-- Nossos Serviços -->
+            <div class="box-card">
+                <h3>Nossos Serviços</h3>
+                <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px;">
+                        <h4 style="color: var(--primary-color);">Consulta Espiritual</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Orientação espiritual com os Búzios para amor, saúde, trabalho e caminhos.</p>
+                    </div>
+                    <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px;">
+                        <h4 style="color: var(--primary-color);">Jogo de Búzios</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Jogo tradicional de Búzios para esclarecimento de dúvidas e direcionamento espiritual.</p>
+                    </div>
+                    <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px;">
+                        <h4 style="color: var(--primary-color);">Atendimento com Hora Marcada</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Ambiente acolhedor, sigiloso e com total respeito.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agende sua Consulta -->
+            <div class="box-card">
+                <h3>Agende sua Consulta</h3>
+                <form id="form-agendamento" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Seu Nome Completo</label>
+                        <input type="text" id="ag-nome" required placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Seu WhatsApp / Telefone</label>
+                        <input type="text" id="ag-telefone" required placeholder="(11) 99999-9999">
+                    </div>
+                    <div class="form-group">
+                        <label>Selecione o Serviço</label>
+                        <select id="ag-servico" required>
+                            <option value="">Selecione um serviço</option>
+                            <option value="CONSULTA ESPIRITUAL">Consulta Espiritual</option>
+                            <option value="JOGO DE BÚZIOS">Jogo de Búzios</option>
+                            <option value="ATENDIMENTO COM HORA MARCADA">Atendimento com Hora Marcada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Data Disponível</label>
+                        <select id="ag-data" required disabled>
+                            <option value="">Selecione um serviço primeiro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Horário Disponível</label>
+                        <select id="ag-horario" required disabled>
+                            <option value="">Selecione uma data primeiro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mensagem / Observação (Opcional)</label>
+                        <textarea id="ag-mensagem" rows="3" placeholder="Deixe alguma observação..."></textarea>
+                    </div>
+                    <button type="submit" style="width: 100%;">Agendar Agora</button>
+                    <div id="ag-msg" style="margin-top: 1rem;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function carregarGiras() {
+            try {
+                const res = await fetch('/api/giras');
+                const giras = await res.json();
+                const container = document.getElementById('lista-giras');
+                if (giras.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-muted);">Nenhuma gira cadastrada no momento.</p>';
+                    return;
+                }
+                container.innerHTML = giras.map(g => `
+                    <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 1rem;">
+                        <span class="badge-date">${g.dia} ${g.mes}</span>
+                        <h4 style="color: var(--primary-color);">${g.nome}</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">${g.dia_semana} - ${g.horario} | ${g.categoria}</p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        const selServico = document.getElementById('ag-servico');
+        const selData = document.getElementById('ag-data');
+        const selHora = document.getElementById('ag-horario');
+
+        let horariosGlobais = [];
+
+        async function carregarHorariosDisponiveis() {
+            try {
+                const res = await fetch('/api/horarios-disponiveis');
+                horariosGlobais = await res.json();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        selServico.addEventListener('change', () => {
+            const servico = selServico.value;
+            selData.innerHTML = '<option value="">Selecione a data</option>';
+            selHora.innerHTML = '<option value="">Selecione uma data primeiro</option>';
+            selData.disabled = !servico;
+            selHora.disabled = true;
+
+            if (!servico) return;
+
+            const datasUnicas = [...new Set(horariosGlobais.filter(h => h.servico === servico && h.status === 'Disponível').map(h => h.data))];
+            if (datasUnicas.length === 0) {
+                selData.innerHTML = '<option value="">Nenhuma data disponível para este serviço</option>';
+                return;
+            }
+
+            selData.innerHTML = '<option value="">Selecione a data</option>' + datasUnicas.map(d => `<option value="${d}">${d}</option>`).join('');
+        });
+
+        selData.addEventListener('change', () => {
+            const servico = selServico.value;
+            const data = selData.value;
+            selHora.innerHTML = '<option value="">Selecione o horário</option>';
+            selHora.disabled = !data;
+
+            if (!data) return;
+
+            const horariosFiltrados = horariosGlobais.filter(h => h.servico === servico && h.data === data && h.status === 'Disponível');
+            selHora.innerHTML = '<option value="">Selecione o horário</option>' + horariosFiltrados.map(h => `<option value="${h.id}">${h.horario}</option>`).join('');
+        });
+
+        document.getElementById('form-agendamento').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgBox = document.getElementById('ag-msg');
+            const dataObj = {
+                nome: document.getElementById('ag-nome').value,
+                telefone: document.getElementById('ag-telefone').value,
+                servico: selServico.value,
+                data: selData.value,
+                horario_id: selHora.value,
+                mensagem: document.getElementById('ag-mensagem').value
+            };
+
+            try {
+                const res = await fetch('/api/agendar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataObj)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msgBox.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                    document.getElementById('form-agendamento').reset();
+                    selData.disabled = true;
+                    selHora.disabled = true;
+                    carregarHorariosDisponiveis();
+                } else {
+                    msgBox.innerHTML = `<div class="alert alert-error">${data.error}</div>`;
+                }
+            } catch (err) {
+                msgBox.innerHTML = `<div class="alert alert-error">Erro ao enviar agendamento.</div>`;
+            }
+        });
+
+        carregarGiras();
+        carregarHorariosDisponiveis();
+    </script>
+</body>
+</html>

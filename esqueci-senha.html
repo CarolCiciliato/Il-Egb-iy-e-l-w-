@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Ilê Egbé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ilê Egbé - Recuperação de Senha</h1>
+        <nav><a href="login.html">Voltar ao Login</a></nav>
+    </header>
+    <div class="container" style="max-width: 400px;">
+        <div class="card">
+            <h2>Recuperar Senha</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Informe seu e-mail cadastrado para receber o link seguro de redefinição de senha.</p>
+            <form id="form-esqueci">
+                <div class="form-group">
+                    <label>E-mail Cadastrado</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+                <button type="submit" style="width: 100%;">Enviar Link de Recuperação</button>
+                <div id="esqueci-msg" style="margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('form-esqueci').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgBox = document.getElementById('esqueci-msg');
+            const email = document.getElementById('email').value;
+            try {
+                const res = await fetch('/api/auth/esqueci-senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    msgBox.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+                    document.getElementById('form-esqueci').reset();
+                } else {
+                    msgBox.innerHTML = `<div class="alert alert-error">${result.error}</div>`;
+                }
+            } catch (err) {
+                msgBox.innerHTML = `<div class="alert alert-error">Erro ao processar solicitação.</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

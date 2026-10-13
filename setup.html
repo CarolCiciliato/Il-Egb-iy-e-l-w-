@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Inicial - Ilê Egbé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ilê Egbé - Configuração Inicial do Sistema</h1>
+    </header>
+    <div class="container" style="max-width: 500px;">
+        <div class="card">
+            <h2>Cadastro do Administrador Master</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">O sistema não possui administradores cadastrados. Por favor, cadastre o primeiro administrador master para iniciar.</p>
+            <form id="form-setup">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" required placeholder="Ex: Babalorixá Arnaldo">
+                </div>
+                <div class="form-group">
+                    <label>E-mail de Acesso</label>
+                    <input type="email" id="email" required placeholder="contato@cicliatech.tech">
+                </div>
+                <div class="form-group">
+                    <label>Senha de Acesso</label>
+                    <input type="password" id="senha" required placeholder="Mínimo 6 caracteres">
+                </div>
+                <button type="submit" style="width: 100%;">Concluir Configuração</button>
+                <div id="setup-msg" style="margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('form-setup').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgBox = document.getElementById('setup-msg');
+            const data = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value
+            };
+            try {
+                const res = await fetch('/api/setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    msgBox.innerHTML = `<div class="alert alert-success">${result.message}. Redirecionando...</div>`;
+                    setTimeout(() => window.location.href = 'login.html', 1500);
+                } else {
+                    msgBox.innerHTML = `<div class="alert alert-error">${result.error}</div>`;
+                }
+            } catch (err) {
+                msgBox.innerHTML = `<div class="alert alert-error">Erro de conexão com o servidor.</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

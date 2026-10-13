@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha - Ilê Egbé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ilê Egbé - Nova Senha</h1>
+        <nav><a href="login.html">Ir para Login</a></nav>
+    </header>
+    <div class="container" style="max-width: 400px;">
+        <div class="card">
+            <h2>Redefinir Senha</h2>
+            <form id="form-redefinir">
+                <div class="form-group">
+                    <label>Nova Senha</label>
+                    <input type="password" id="novaSenha" required placeholder="Digite a nova senha">
+                </div>
+                <button type="submit" style="width: 100%;">Atualizar Senha</button>
+                <div id="redefinir-msg" style="margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        document.getElementById('form-redefinir').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgBox = document.getElementById('redefinir-msg');
+            const novaSenha = document.getElementById('novaSenha').value;
+
+            if (!token) {
+                msgBox.innerHTML = `<div class="alert alert-error">Token inválido ou ausente na URL.</div>`;
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/redefinir-senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, novaSenha })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    msgBox.innerHTML = `<div class="alert alert-success">${result.message}. Redirecionando para login...</div>`;
+                    setTimeout(() => window.location.href = 'login.html', 2000);
+                } else {
+                    msgBox.innerHTML = `<div class="alert alert-error">${result.error}</div>`;
+                }
+            } catch (err) {
+                msgBox.innerHTML = `<div class="alert alert-error">Erro ao redefinir senha.</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

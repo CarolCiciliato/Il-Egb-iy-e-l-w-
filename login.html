@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ilê Egbé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ilê Egbé - Painel Administrativo</h1>
+        <nav><a href="/">Ver Site</a></nav>
+    </header>
+    <div class="container" style="max-width: 400px;">
+        <div class="card">
+            <h2>Entrar no Sistema</h2>
+            <form id="form-login">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="senha" required placeholder="Sua senha">
+                </div>
+                <button type="submit" style="width: 100%;">Entrar</button>
+                <div class="links">
+                    <a href="esqueci-senha.html">Esqueceu a senha?</a>
+                </div>
+                <div id="login-msg" style="margin-top: 1rem;"></div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msgBox = document.getElementById('login-msg');
+            const data = {
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value
+            };
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    window.location.href = 'admin.html';
+                } else {
+                    msgBox.innerHTML = `<div class="alert alert-error">${result.error}</div>`;
+                }
+            } catch (err) {
+                msgBox.innerHTML = `<div class="alert alert-error">Erro ao realizar login.</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
