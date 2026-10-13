@@ -69,7 +69,7 @@
         <div id="tab-giras" class="tab-content active">
             <h2>Cadastrar Nova Gira / Evento</h2>
             <form id="form-gira">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="form-grid">
                     <div class="form-group"><label>Dia (ex: 24)</label><input type="text" id="g-dia" required></div>
                     <div class="form-group"><label>Mês (ex: MAI)</label><input type="text" id="g-mes" required></div>
                     <div class="form-group"><label>Dia da Semana (ex: SÁBADO)</label><input type="text" id="g-semana" required></div>
@@ -81,17 +81,19 @@
             </form>
 
             <h2 class="mt-3">Giras e Eventos Cadastrados</h2>
-            <table>
-                <thead><tr><th>Dia</th><th>Mês</th><th>Nome do Evento</th><th>Categoria</th><th>Ação</th></tr></thead>
-                <tbody id="tabela-giras"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Dia</th><th>Mês</th><th>Nome do Evento</th><th>Categoria</th><th>Ação</th></tr></thead>
+                    <tbody id="tabela-giras"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Aba Horários -->
         <div id="tab-horarios" class="tab-content">
             <h2>Cadastrar Horário Disponível</h2>
             <form id="form-horario">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="form-grid">
                     <div class="form-group"><label>Data</label><input type="date" id="h-data" required></div>
                     <div class="form-group"><label>Horário</label><input type="time" id="h-horario" required></div>
                     <div class="form-group"><label>Serviço</label>
@@ -106,19 +108,23 @@
             </form>
 
             <h2 class="mt-3">Horários de Atendimento Cadastrados</h2>
-            <table>
-                <thead><tr><th>Data</th><th>Horário</th><th>Serviço</th><th>Status</th><th>Ação</th></tr></thead>
-                <tbody id="tabela-horarios"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Data</th><th>Horário</th><th>Serviço</th><th>Status</th><th>Ação</th></tr></thead>
+                    <tbody id="tabela-horarios"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Aba Solicitações -->
         <div id="tab-solicitacoes" class="tab-content">
             <h2>Solicitações de Agendamento Recebidas</h2>
-            <table>
-                <thead><tr><th>Nome</th><th>Telefone</th><th>Serviço</th><th>Data</th><th>Horário</th><th>Mensagem</th></tr></thead>
-                <tbody id="tabela-solicitacoes"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Nome</th><th>Telefone</th><th>Serviço</th><th>Data</th><th>Horário</th><th>Mensagem</th></tr></thead>
+                    <tbody id="tabela-solicitacoes"></tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Aba Trocar Senha -->
@@ -144,10 +150,12 @@
             </form>
 
             <h2>Administradores Cadastrados no Sistema</h2>
-            <table>
-                <thead><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Ações</th></tr></thead>
-                <tbody id="tabela-admins"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Ações</th></tr></thead>
+                    <tbody id="tabela-admins"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 

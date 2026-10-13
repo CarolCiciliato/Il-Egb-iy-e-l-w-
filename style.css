@@ -18,6 +18,11 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 body {
     background-color: var(--bg-light);
     color: var(--text-main);
@@ -211,4 +216,158 @@ tr:hover {
 
 .links a:hover {
     text-decoration: underline;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    gap: 1rem;
+}
+
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    header,
+    .admin-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    header h1,
+    .admin-header h1 {
+        font-size: 1.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+    }
+
+    nav a {
+        margin-left: 0;
+        padding: 0.35rem 0;
+    }
+
+    .container {
+        width: 100%;
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+
+    .card,
+    .tab-content {
+        padding: 1.25rem;
+    }
+
+    h2 {
+        font-size: 1.45rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1.5rem;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .box-card {
+        min-width: 0;
+        padding: 1.25rem;
+    }
+
+    .tabs {
+        gap: 0.25rem;
+        padding: 0 0.5rem;
+    }
+
+    .tab-btn {
+        min-height: 44px;
+        padding: 0.75rem 0.85rem;
+    }
+
+    .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    input,
+    select,
+    textarea,
+    button,
+    .btn {
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+        min-height: 44px;
+        font-size: 16px;
+    }
+
+    button,
+    .btn {
+        min-height: 44px;
+        padding: 0.7rem 1rem;
+    }
+
+    .links {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .table-responsive table {
+        min-width: 600px;
+    }
+
+    th,
+    td {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .container {
+        padding: 0 0.75rem;
+    }
+
+    .card,
+    .tab-content,
+    .hero,
+    .box-card {
+        padding: 1rem;
+    }
+
+    .admin-header {
+        padding: 0.85rem;
+    }
+
+    .admin-header .btn-danger {
+        align-self: flex-start;
+    }
 }
