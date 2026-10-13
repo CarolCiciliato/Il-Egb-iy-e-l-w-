@@ -20,11 +20,11 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Servir arquivos estáticos da pasta public
-app.use(express.static(path.join(__dirname, 'public')));
+// Servir arquivos estáticos da raiz do projeto
+app.use(express.static(__dirname));
 
 // Configuração do Banco de Dados SQLite
 const dbFile = path.join(__dirname, 'database.sqlite');
