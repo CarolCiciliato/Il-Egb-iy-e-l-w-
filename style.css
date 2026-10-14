@@ -62,16 +62,6 @@ nav a:hover {
     padding: 0 1.5rem;
 }
 
-.logo-principal {
-    max-width: 220px;
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-    object-fit: contain;
-}
-
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -279,9 +269,7 @@ tr:hover {
     }
 
     .hero {
-        grid-template-columns: minmax(0, 1fr);
         padding: 1.5rem;
-        gap: 1.25rem;
         margin-bottom: 1.5rem;
     }
 
