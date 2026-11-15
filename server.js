@@ -5,6 +5,21 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+// Configuração do Transporter do Nodemailer para o Gmail
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+
 const path = require('path');
 
 const app = express();
@@ -82,15 +97,7 @@ function inicializarBanco() {
 }
 
 // Nodemailer Transporter
-const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.EMAIL_PORT || '465'),
-    secure: process.env.EMAIL_SECURE === 'true',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+;
 
 // Middleware de Setup Wizard: Se não houver administradores, redireciona para /setup.html
 app.use((req, res, next) => {
@@ -392,7 +399,28 @@ app.get('/api/agendamentos', verificarAutenticacao, (req, res) => {
         res.json(rows);
     });
 });
+// Rota para solicitar recuperação de senha
+app.post('/api/esqueci-senha', (req, res) => {
+    const { email } = req.body;
+    
+    db.get(`SELECT * FROM usuarios_admin WHERE username = 'admin'`, (err, user) => {
+        // Para simplificar, enviamos para o e-mail configurado no .env
+        const mailOptions = {
+            from: process.env.SMTP_USER,
+            to: email,
+            subject: 'Recuperação de Senha - Ilê Egbé',
+            html: `<p>Você solicitou a recuperação de senha. Acesse o painel administrativo para redefinir.</p>`
+        };
 
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Erro ao enviar e-mail:', error);
+                return res.status(500).json({ error: 'Erro ao enviar e-mail de recuperação. Verifique as credenciais no .env.' });
+            }
+            res.json({ message: 'E-mail de recuperação enviado com sucesso!' });
+        });
+    });
+});
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
