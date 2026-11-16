@@ -9,7 +9,7 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: Number(process.env.SMTP_PORT) || 587,
-    secure: process.env.SMTP_SECURE === 'true',
+    secure: false,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
@@ -184,12 +184,12 @@ app.get('/api/auth/me', verificarAutenticacao, (req, res) => {
     res.json({ id: req.session.adminId, nome: req.session.adminNome, email: req.session.adminEmail });
 });
 
-app.post('/api/auth/esqueci-senha', (req, res) => {
+function solicitarRecuperacaoSenha(req, res) {
     const { email } = req.body;
     db.get(`SELECT * FROM administradores WHERE email = ?`, [email], (err, admin) => {
         if (err) return res.status(500).json({ error: err.message });
         if (!admin) {
-            return res.json({ message: 'Se o e-mail estiver cadastrado, você receberá as instruções de recuperação.' });
+            return res.json({ success: true, message: 'Se o e-mail estiver cadastrado, você receberá as instruções de recuperação.' });
         }
 
         const token = crypto.randomBytes(32).toString('hex');
@@ -202,7 +202,7 @@ app.post('/api/auth/esqueci-senha', (req, res) => {
             const resetLink = `${baseUrl}/redefinir-senha.html?token=${token}`;
 
             const mailOptions = {
-                from: process.env.EMAIL_USER,
+                from: process.env.SMTP_USER,
                 to: admin.email,
                 subject: 'Ilê Egbé - Recuperação de Senha',
                 html: `
@@ -219,14 +219,17 @@ app.post('/api/auth/esqueci-senha', (req, res) => {
 
             try {
                 await transporter.sendMail(mailOptions);
-                res.json({ message: 'E-mail de recuperação enviado com sucesso!' });
+                res.json({ success: true, message: 'E-mail de recuperação enviado com sucesso!' });
             } catch (mailErr) {
                 console.error('Erro ao enviar e-mail:', mailErr);
                 res.status(500).json({ error: 'Erro ao enviar e-mail de recuperação. Verifique as credenciais no .env.' });
             }
         });
     });
-});
+}
+
+app.post('/api/auth/esqueci-senha', solicitarRecuperacaoSenha);
+app.post('/api/esqueci-senha', solicitarRecuperacaoSenha);
 
 app.post('/api/auth/redefinir-senha', async (req, res) => {
     const { token, novaSenha } = req.body;
@@ -397,28 +400,6 @@ app.get('/api/agendamentos', verificarAutenticacao, (req, res) => {
     db.all(`SELECT * FROM agendamentos ORDER BY id DESC`, [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
-    });
-});
-// Rota para solicitar recuperação de senha
-app.post('/api/esqueci-senha', (req, res) => {
-    const { email } = req.body;
-    
-    db.get(`SELECT * FROM usuarios_admin WHERE username = 'admin'`, (err, user) => {
-        // Para simplificar, enviamos para o e-mail configurado no .env
-        const mailOptions = {
-            from: process.env.SMTP_USER,
-            to: email,
-            subject: 'Recuperação de Senha - Ilê Egbé',
-            html: `<p>Você solicitou a recuperação de senha. Acesse o painel administrativo para redefinir.</p>`
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('Erro ao enviar e-mail:', error);
-                return res.status(500).json({ error: 'Erro ao enviar e-mail de recuperação. Verifique as credenciais no .env.' });
-            }
-            res.json({ message: 'E-mail de recuperação enviado com sucesso!' });
-        });
     });
 });
 app.listen(PORT, () => {
